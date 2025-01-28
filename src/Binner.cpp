@@ -27,7 +27,6 @@ Binner::Binner()
 
 	QFontMetrics metrics(font);
 	int width = metrics.horizontalAdvance(SEPARATOR) + metrics.horizontalAdvance('=');
-	textEdit->setFixedWidth(width);
 
 	QMenuBar *menuBar = this->menuBar();
 
@@ -41,9 +40,20 @@ Binner::Binner()
 	newAction->setShortcut(QKeySequence::New);
 	fileMenu->addAction(newAction);
 
+	QAction *openAction = new QAction("Open", this);
+	connect(openAction, &QAction::triggered, this, &Binner::openFile);
+	openAction->setShortcut(QKeySequence::Open);
+	fileMenu->addAction(openAction);
+
 	QAction *saveAction = new QAction("Save", this);
 	connect(saveAction, &QAction::triggered, this, &Binner::saveFile);
+	saveAction->setShortcut(QKeySequence::Save);
 	fileMenu->addAction(saveAction);
+
+	QAction *saveAs = new QAction("Save As...", this);
+	connect(saveAs, &QAction::triggered, this, &Binner::saveFileAs);
+	saveAs->setShortcut(QKeySequence::SaveAs);
+	fileMenu->addAction(saveAs);
 
 	QAction *quitAction = new QAction("Quit", this);
 	connect(quitAction, &QAction::triggered, this, &Binner::close);
@@ -66,7 +76,7 @@ Binner::Binner()
 	wordWrap->setCheckable(true);
 	wordWrap->setChecked(false);
 	connect(wordWrap, &QAction::triggered, this, &Binner::toggleWordWrap);
-	viewMenu->addAction(wordWrap);
+	/*viewMenu->addAction(wordWrap);*/
 
 	QAction *aboutMenu = new QAction("About Binner...", this);
 	connect(aboutMenu, &QAction::triggered, this, &Binner::aboutBinner);
@@ -110,6 +120,7 @@ void Binner::toggleWordWrap()
 
 void Binner::saveFile()
 {
+	std::cout << "Saved file\n";
 	if (filePath == "")
 	{
 		filePath = selectSaveFile();
@@ -133,4 +144,30 @@ void Binner::saveFile()
 QString Binner::selectSaveFile()
 {
 	return QFileDialog::getSaveFileName(this);
+}
+
+void Binner::saveFileAs() 
+{
+	filePath = selectSaveFile();
+	if (filePath == "")
+	{
+		return;
+	}
+	saveFile();
+}
+
+void Binner::openFile()
+{
+	std::cout << "Open file\n";
+	filePath = selectOpenFile();
+	QFile file(filePath);
+	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+		return;
+	QTextStream in(&file);
+	textEdit->setPlainText(in.readAll());
+}
+
+QString Binner::selectOpenFile()
+{
+	return QFileDialog::getOpenFileName(this, "Select file to open", "*.txt");
 }

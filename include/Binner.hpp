@@ -21,5 +21,8 @@ class Binner : public QMainWindow {
 		void toggleWordWrap();
 		void saveFile();
 		QString selectSaveFile();
+		void saveFileAs();
+		QString selectOpenFile();
+		void openFile();
 };
 #endif
