@@ -10,6 +10,7 @@
 #include <QMenu>
 #include <QPlainTextEdit>
 #include <QTextEdit>
+#include <QFile>
 
 /**
  * Source file for Binner class.
@@ -107,12 +108,11 @@ void Binner::toggleWordWrap()
 {
 }
 
-
 void Binner::saveFile()
 {
 	if (filePath == "")
 	{
-		filePath = selectSaveFile().toStdString();
+		filePath = selectSaveFile();
 		if (filePath == "")
 		{
 			return;
@@ -121,6 +121,11 @@ void Binner::saveFile()
 	}
 	else
 	{
+		QFile file(filePath);
+		if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+			return;
+		QTextStream out(&file);
+		out << textEdit->toPlainText();
 	}
 }
 

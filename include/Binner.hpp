@@ -9,7 +9,7 @@
 class Binner : public QMainWindow {
 	protected:
 		QPlainTextEdit *textEdit;
-		std::string filePath;
+		QString filePath;
 	private:
 		QAction *wordWrap;
 	public:
