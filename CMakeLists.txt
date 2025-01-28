@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.12.4)
-project(binner VERSION 0.0.0)
+project(binner VERSION 0.1.0)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Qt6 REQUIRED COMPONENTS Gui)

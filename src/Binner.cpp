@@ -110,7 +110,7 @@ void Binner::aboutBinner()
 	std::cout << "About" << std::endl;
 	QMessageBox aboutDialog(this);
 	aboutDialog.setWindowTitle("About Binner");
-	aboutDialog.setText("Binner v0.0.0 (c) 2024 Gordinator, all rights reserved.");
+	aboutDialog.setText("Binner v0.1.0 (c) 2025 Gordinator, all rights reserved.");
 	aboutDialog.exec();
 }
 
