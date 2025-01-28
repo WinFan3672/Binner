@@ -113,6 +113,10 @@ void Binner::saveFile()
 	if (filePath == "")
 	{
 		filePath = selectSaveFile().toStdString();
+		if (filePath == "")
+		{
+			return;
+		}
 		saveFile();
 	}
 	else
